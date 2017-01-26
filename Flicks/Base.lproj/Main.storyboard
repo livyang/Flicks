@@ -71,8 +71,8 @@
                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="list"/>
-                                    <segment title="grid"/>
+                                    <segment title="" image="list"/>
+                                    <segment title="" image="grid"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="8ei-E2-eiH"/>
@@ -187,8 +187,8 @@
                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="list"/>
-                                    <segment title="grid"/>
+                                    <segment title="" image="list"/>
+                                    <segment title="" image="grid"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentSelected:" destination="JNR-25-yOd" eventType="valueChanged" id="gfh-uA-CaS"/>
@@ -198,6 +198,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="movieTableView" destination="bZP-MG-JYB" id="MDE-Sj-2Sm"/>
+                        <outlet property="segControl" destination="fbv-hv-xjX" id="ix6-Lm-DNb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vxH-XQ-ZiA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -263,6 +264,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="grid" width="20" height="20"/>
+        <image name="list" width="20" height="20"/>
         <image name="nowPlaying.png" width="24" height="24"/>
         <image name="topRated.png" width="24" height="24"/>
     </resources>
