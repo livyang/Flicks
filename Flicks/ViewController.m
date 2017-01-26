@@ -11,6 +11,7 @@
 #import "MovieModel.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "DetailViewController.h"
+#import "MBProgressHUD.h"
 
 @interface ViewController () <UITableViewDataSource>
 
@@ -46,6 +47,7 @@
 -(void) fetchMovies:(NSString *) query {
 
     NSString *apiKey = @"a07e22bc18f5cb106bfe4cc1f83ad8ed";
+//    NSString *urlString =[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%@?api_key=%@", query, apiKey];
     NSString *urlString =[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%@?api_key=%@", query, apiKey];
     NSLog(@"url string is %@", urlString);
 
@@ -58,10 +60,13 @@
                                   delegate:nil
                              delegateQueue:[NSOperationQueue mainQueue]];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:^(NSData * _Nullable data,
                                                                 NSURLResponse * _Nullable response,
                                                                 NSError * _Nullable error) {
+                                                [MBProgressHUD hideHUDForView:self.view animated:true];
                                                 if (!error) {
                                                     NSError *jsonError = nil;
                                                     NSDictionary *responseDictionary =
@@ -82,6 +87,13 @@
                                                     
                                                 } else {
                                                     NSLog(@"An error occurred: %@", error.description);
+                                                    [self.view setHidden:true];
+                                                    UIAlertController * alert=   [UIAlertController
+                                                                                  alertControllerWithTitle:@"Network error"
+                                                                                  message:[error localizedDescription]
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                                                    
+                                                    [self presentViewController:alert animated:YES completion:nil];
                                                 }
                                             }];
     [task resume];
