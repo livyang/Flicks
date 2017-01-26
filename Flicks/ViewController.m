@@ -40,12 +40,7 @@
     }else {
         NSLog((@"Unknown restorationIdentifier"));
     }
-    
-//    UIBarButtonItem* rightButton = self.navigationItem.rightBarButtonItem;
-//    [rightButton setImage:[[UIImage imageNamed:@"star"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    
-//    [self.tabBarItem setImage:[[UIImage imageNamed:@"iconmonstr-star-1-24"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-    
+        
     self.movieTableView.refreshControl = [[UIRefreshControl alloc]init];
     [self.movieTableView addSubview:self.movieTableView.refreshControl];
     [self.movieTableView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
@@ -67,10 +62,8 @@
     collectionView.backgroundColor = [UIColor magentaColor];
     [self.view addSubview:collectionView];
     collectionView.hidden = YES;
-//    self.movieTableView.hidden = YES;
     self.movieCollectionView = collectionView;
     
-    //TODO: doesn't work well
     self.movieCollectionView.refreshControl = [[UIRefreshControl alloc]init];
     [self.movieCollectionView addSubview:self.movieCollectionView.refreshControl];
     [self.movieCollectionView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
@@ -106,6 +99,7 @@
     }
     
     [self.movieTableView.refreshControl endRefreshing];
+    [self.movieCollectionView.refreshControl endRefreshing];
 }
 
 -(void) fetchMovies:(NSString *) query {
@@ -202,25 +196,6 @@
 }
 
 
-/*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
- //   [self performSegueWithIdentifier:@"ShowDetail" sender:tableView];
-    MovieCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCellId" forIndexPath:indexPath];
-    NSLog(@"selected movie %@ in %@ ", cell.movieTitle, self.restorationIdentifier);
-}
-*/
-
-
-
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    //[self performSegueWithIdentifier:@"showDetail" sender:self];
-//    UIStoryboard *sb=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-///*    DetailViewController *vc=(DetailViewController *)[sb instantiateViewControllerWithIdentifier:@"detail"];
-//    vc.label.text =[self.peopleaddress objectAtIndex:indexPath.row];
-//    vc. textfield.text =[self.peopleaddress objectAtIndex:indexPath.row];*/
-//}
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
