@@ -16,7 +16,7 @@
 @interface ViewController () <UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray<MovieModel *> *movies;
-
+//@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation ViewController
@@ -42,12 +42,28 @@
     
 //    [self.tabBarItem setImage:[[UIImage imageNamed:@"iconmonstr-star-1-24"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     
+    self.movieTableView.refreshControl = [[UIRefreshControl alloc]init];
+    [self.movieTableView addSubview:self.movieTableView.refreshControl];
+    [self.movieTableView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshTable {
+    NSLog(@"restorationIdentifier is %@", self.restorationIdentifier);
+    if ([self.restorationIdentifier isEqualToString:@"Movies"]) {
+        [self fetchMovies:@"now_playing"];
+        
+    }else if ([self.restorationIdentifier isEqualToString:@"TopMovies"]) {
+        [self fetchMovies:@"top_rated"];
+    }else {
+        NSLog((@"Unknown restorationIdentifier"));
+    }
+    
+    [self.movieTableView.refreshControl endRefreshing];
 }
 
 -(void) fetchMovies:(NSString *) query {
 
     NSString *apiKey = @"a07e22bc18f5cb106bfe4cc1f83ad8ed";
-//    NSString *urlString =[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%@?api_key=%@", query, apiKey];
     NSString *urlString =[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%@?api_key=%@", query, apiKey];
     NSLog(@"url string is %@", urlString);
 
