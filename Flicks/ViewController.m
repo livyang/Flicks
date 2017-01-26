@@ -18,6 +18,9 @@
 
 @property (nonatomic, strong) NSArray<MovieModel *> *movies;
 //@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
+
+
 @end
 
 @implementation ViewController
@@ -63,14 +66,32 @@
     collectionView.delegate = self;
     collectionView.backgroundColor = [UIColor magentaColor];
     [self.view addSubview:collectionView];
-    //collectionView.hidden = YES;
-    self.movieTableView.hidden = YES;
+    collectionView.hidden = YES;
+//    self.movieTableView.hidden = YES;
     self.movieCollectionView = collectionView;
     
     //TODO: doesn't work well
     self.movieCollectionView.refreshControl = [[UIRefreshControl alloc]init];
     [self.movieCollectionView addSubview:self.movieCollectionView.refreshControl];
     [self.movieCollectionView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+        
+}
+
+- (void)changeViewStyle:(UISegmentedControl *)segment
+{
+    
+    if(segment.selectedSegmentIndex == 0)
+    {
+        // action for the first button (Current or Default)
+        self.movieCollectionView.hidden = YES;
+        self.movieTableView.hidden = NO;
+    }
+    else if(segment.selectedSegmentIndex == 1)
+    {
+        // action for the second button
+        self.movieCollectionView.hidden = NO;
+        self.movieTableView.hidden = YES;
+    }
 }
 
 - (void)refreshTable {
@@ -217,6 +238,22 @@
     return cell;
 }
 
+- (IBAction)segmentSelected:(id)sender {
+    NSInteger segmentIndex = [self.segControl selectedSegmentIndex];
+    NSLog(@"selected segment: %ld", (long)segmentIndex);
+    if(segmentIndex == 0)
+    {
+        // action for the first button (Current or Default)
+        self.movieCollectionView.hidden = YES;
+        self.movieTableView.hidden = NO;
+    }
+    else if(segmentIndex == 1)
+    {
+        // action for the second button
+        self.movieCollectionView.hidden = NO;
+        self.movieTableView.hidden = YES;
+    }
+}
 
 
 
