@@ -16,6 +16,7 @@
 		10312B631E369BF600EB6FAD /* MovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10312B621E369BF600EB6FAD /* MovieCell.m */; };
 		104ED0401E39705B007B4862 /* topRated.png in Resources */ = {isa = PBXBuildFile; fileRef = 104ED03F1E39705B007B4862 /* topRated.png */; };
 		104ED0421E397082007B4862 /* nowPlaying.png in Resources */ = {isa = PBXBuildFile; fileRef = 104ED0411E397082007B4862 /* nowPlaying.png */; };
+		104ED0451E3A87DD007B4862 /* MoviePosterCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 104ED0441E3A87DD007B4862 /* MoviePosterCollectionViewCell.m */; };
 		10F0A4241E36AEE3005EB3A9 /* MovieModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F0A4231E36AEE3005EB3A9 /* MovieModel.m */; };
 		10F0A42A1E381FFE005EB3A9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F0A4291E381FFE005EB3A9 /* DetailViewController.m */; };
 		925DF61278A2275D21771BD7 /* libPods-Flicks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 533C0E1FE7D861929D99C474 /* libPods-Flicks.a */; };
@@ -36,6 +37,8 @@
 		10312B621E369BF600EB6FAD /* MovieCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieCell.m; sourceTree = "<group>"; };
 		104ED03F1E39705B007B4862 /* topRated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topRated.png; sourceTree = SOURCE_ROOT; };
 		104ED0411E397082007B4862 /* nowPlaying.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowPlaying.png; sourceTree = SOURCE_ROOT; };
+		104ED0431E3A87DD007B4862 /* MoviePosterCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoviePosterCollectionViewCell.h; sourceTree = "<group>"; };
+		104ED0441E3A87DD007B4862 /* MoviePosterCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoviePosterCollectionViewCell.m; sourceTree = "<group>"; };
 		10F0A4221E36AEE3005EB3A9 /* MovieModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieModel.h; sourceTree = "<group>"; };
 		10F0A4231E36AEE3005EB3A9 /* MovieModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieModel.m; sourceTree = "<group>"; };
 		10F0A4281E381FFE005EB3A9 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 				10312B621E369BF600EB6FAD /* MovieCell.m */,
 				10F0A4281E381FFE005EB3A9 /* DetailViewController.h */,
 				10F0A4291E381FFE005EB3A9 /* DetailViewController.m */,
+				104ED0431E3A87DD007B4862 /* MoviePosterCollectionViewCell.h */,
+				104ED0441E3A87DD007B4862 /* MoviePosterCollectionViewCell.m */,
 			);
 			path = Flicks;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				10312B4C1E36840400EB6FAD /* AppDelegate.m in Sources */,
 				10F0A4241E36AEE3005EB3A9 /* MovieModel.m in Sources */,
 				10312B631E369BF600EB6FAD /* MovieCell.m in Sources */,
+				104ED0451E3A87DD007B4862 /* MoviePosterCollectionViewCell.m in Sources */,
 				10312B491E36840400EB6FAD /* main.m in Sources */,
 				10F0A42A1E381FFE005EB3A9 /* DetailViewController.m in Sources */,
 			);

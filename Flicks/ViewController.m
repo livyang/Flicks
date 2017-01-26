@@ -12,8 +12,9 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "DetailViewController.h"
 #import "MBProgressHUD.h"
+#import "MoviePosterCollectionViewCell.h"
 
-@interface ViewController () <UITableViewDataSource>
+@interface ViewController () <UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) NSArray<MovieModel *> *movies;
 //@property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -45,6 +46,31 @@
     self.movieTableView.refreshControl = [[UIRefreshControl alloc]init];
     [self.movieTableView addSubview:self.movieTableView.refreshControl];
     [self.movieTableView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    CGFloat screenWidth = CGRectGetWidth(self.view.bounds);
+    CGFloat itemHight = 150;
+    CGFloat itemWidth = screenWidth/3;
+    layout.minimumLineSpacing = 0;
+    layout.minimumInteritemSpacing = 0;
+    layout.itemSize = CGSizeMake(itemWidth, itemHight);
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    
+    
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectInset(self.view.bounds, 0, 64) collectionViewLayout:layout];
+    [collectionView registerClass:[MoviePosterCollectionViewCell class] forCellWithReuseIdentifier:@"MoviePosterCollectionViewCell"];
+    collectionView.dataSource = self;
+    collectionView.delegate = self;
+    collectionView.backgroundColor = [UIColor magentaColor];
+    [self.view addSubview:collectionView];
+    //collectionView.hidden = YES;
+    self.movieTableView.hidden = YES;
+    self.movieCollectionView = collectionView;
+    
+    //TODO: doesn't work well
+    self.movieCollectionView.refreshControl = [[UIRefreshControl alloc]init];
+    [self.movieCollectionView addSubview:self.movieCollectionView.refreshControl];
+    [self.movieCollectionView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)refreshTable {
@@ -100,6 +126,7 @@
                                                     }
                                                     self.movies = models;
                                                     [self.movieTableView reloadData];
+                                                    [self.movieCollectionView reloadData];
                                                     
                                                 } else {
                                                     NSLog(@"An error occurred: %@", error.description);
@@ -165,13 +192,29 @@
 
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //[self performSegueWithIdentifier:@"showDetail" sender:self];
-    UIStoryboard *sb=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-/*    DetailViewController *vc=(DetailViewController *)[sb instantiateViewControllerWithIdentifier:@"detail"];
-    vc.label.text =[self.peopleaddress objectAtIndex:indexPath.row];
-    vc. textfield.text =[self.peopleaddress objectAtIndex:indexPath.row];*/
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //[self performSegueWithIdentifier:@"showDetail" sender:self];
+//    UIStoryboard *sb=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+///*    DetailViewController *vc=(DetailViewController *)[sb instantiateViewControllerWithIdentifier:@"detail"];
+//    vc.label.text =[self.peopleaddress objectAtIndex:indexPath.row];
+//    vc. textfield.text =[self.peopleaddress objectAtIndex:indexPath.row];*/
+//}
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    return self.movies.count;
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    MoviePosterCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MoviePosterCollectionViewCell" forIndexPath:indexPath];
+    cell.model = [self.movies objectAtIndex:indexPath.item];
+    [cell reloadData];
+    
+    return cell;
 }
 
 

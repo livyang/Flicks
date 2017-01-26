@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *movieTableView;
+@property (weak, nonatomic) UICollectionView *movieCollectionView;
 
 @end
 
