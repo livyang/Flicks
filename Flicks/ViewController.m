@@ -152,14 +152,22 @@
 
 
 -(NSInteger)tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger)section {
+    if ([self.filteredMovies count] != 0  ) {
+        return self.filteredMovies.count;
+    }
     return self.movies.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSArray *movieArray;
+    if ([self.filteredMovies count] != 0  ) {
+        movieArray = self.filteredMovies;
+    }else {
+        movieArray = self.movies;
+    }
     MovieCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCellId" forIndexPath:indexPath];
-    MovieModel *model = [self.movies objectAtIndex:indexPath.row];
+    MovieModel *model = [movieArray objectAtIndex:indexPath.row];
     [cell.movieTitle setText:model.title];
     cell.movieImage.contentMode = UIViewContentModeScaleAspectFit;
     [cell.movieImage setImageWithURL:model.posterURL];
@@ -195,14 +203,23 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    if ([self.filteredMovies count] != 0  ) {
+        return self.filteredMovies.count;
+    }
     return self.movies.count;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSArray *movieArray;
+    if ([self.filteredMovies count] != 0  ) {
+        movieArray = self.filteredMovies;
+    }else {
+        movieArray = self.movies;
+    }
     MoviePosterCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MoviePosterCollectionViewCell" forIndexPath:indexPath];
-    cell.model = [self.movies objectAtIndex:indexPath.item];
+    cell.model = [movieArray objectAtIndex:indexPath.item];
     [cell reloadData];
     
     return cell;
@@ -256,7 +273,12 @@
         }
         self.filteredMovies = filteredMovies;
     }
+    [self.movieTableView reloadData];
+    [self.movieCollectionView reloadData];
     
 }
 
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
+}
 @end
