@@ -22,4 +22,10 @@
     return self;
 }
 
+- (NSString *)description
+{
+//    return [NSString stringWithFormat:@"{title->%@, moviewDescription->%@, posterURL->%@ ", self.title, self.moviewDescription, self.posterURL];
+    return [NSString stringWithFormat:@"{title->%@", self.title];
+}
+
 @end

@@ -14,11 +14,14 @@
 #import "MBProgressHUD.h"
 #import "MoviePosterCollectionViewCell.h"
 
-@interface ViewController () <UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ViewController () <UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) NSArray<MovieModel *> *movies;
-//@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) NSArray<MovieModel *> *filteredMovies;
 
 
 @end
@@ -30,6 +33,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.movieTableView.dataSource = self;
+    
+    self.searchBar.delegate = self;
     
     NSLog(@"restorationIdentifier is %@", self.restorationIdentifier);
     if ([self.restorationIdentifier isEqualToString:@"Movies"]) {
@@ -68,23 +73,6 @@
     [self.movieCollectionView addSubview:self.movieCollectionView.refreshControl];
     [self.movieCollectionView.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
         
-}
-
-- (void)changeViewStyle:(UISegmentedControl *)segment
-{
-    
-    if(segment.selectedSegmentIndex == 0)
-    {
-        // action for the first button (Current or Default)
-        self.movieCollectionView.hidden = YES;
-        self.movieTableView.hidden = NO;
-    }
-    else if(segment.selectedSegmentIndex == 1)
-    {
-        // action for the second button
-        self.movieCollectionView.hidden = NO;
-        self.movieTableView.hidden = YES;
-    }
 }
 
 - (void)refreshTable {
@@ -213,6 +201,14 @@
     return cell;
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+//    TODO
+//    self performSegueWithIdentifier:@"showDetail" sender:<#(nullable id)#>
+}
+
+
 - (IBAction)segmentSelected:(id)sender {
     NSInteger segmentIndex = [self.segControl selectedSegmentIndex];
     NSLog(@"selected segment: %ld", (long)segmentIndex);
@@ -230,6 +226,23 @@
     }
 }
 
-
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSMutableArray *filteredMovies = [NSMutableArray array];
+    if (searchText.length != 0) {
+        self.filteredMovies = nil;
+   
+        NSLog(@"search text is %@", searchText);
+        
+        for (MovieModel *model in self.movies) {
+            NSRange range = [model.title rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if (range.location != NSNotFound) {
+                [filteredMovies addObject:model];
+            }
+        }
+        self.filteredMovies = filteredMovies;
+    }
+    
+}
 
 @end
