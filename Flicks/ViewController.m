@@ -171,18 +171,25 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSIndexPath *indexPath = [self.movieTableView indexPathForSelectedRow];
-    NSLog(@"cell clicked %@",
+    MovieModel *model;
+    if ([sender isKindOfClass:[MovieCell class]]) {
+        NSIndexPath *indexPath = [self.movieTableView indexPathForSelectedRow];
+        NSLog(@"cell clicked %@",
           [self.movies objectAtIndex:indexPath.row].title);
-    // get model
-    MovieModel *model = [self.movies objectAtIndex:indexPath.row];
+        // get model
+        model = [self.movies objectAtIndex:indexPath.row];
     
+        DetailViewController *detailViewController = segue.destinationViewController;
+        detailViewController.model = model;
+        NSLog(@"detail view controller is %@", detailViewController);
+    } else {
+        NSLog(@"sender is %@", sender);
+        model = sender;
+    }
     DetailViewController *detailViewController = segue.destinationViewController;
     detailViewController.model = model;
     NSLog(@"detail view controller is %@", detailViewController);
-    
 }
-
 
 
 #pragma mark - UICollectionViewDataSource
@@ -206,6 +213,13 @@
 {
 //    TODO
 //    self performSegueWithIdentifier:@"showDetail" sender:<#(nullable id)#>
+    
+    MovieModel *model = [self.movies objectAtIndex:indexPath.item];
+//    DetailViewController *detailViewController =
+//    [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
+//    detailViewController.model = model;
+    
+    [self performSegueWithIdentifier:@"showDetail" sender:model];
 }
 
 
