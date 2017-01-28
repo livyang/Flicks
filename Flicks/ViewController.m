@@ -32,8 +32,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.view.backgroundColor = [UIColor orangeColor];
+    
+    self.movieTableView.frame = self.view.bounds;
+    self.movieCollectionView.frame = self.view.bounds;
+    
     self.movieTableView.dataSource = self;
     
+    self.searchBar.showsCancelButton = YES;
     self.searchBar.delegate = self;
     
     NSLog(@"restorationIdentifier is %@", self.restorationIdentifier);
@@ -168,6 +174,7 @@
     }
     MovieCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCellId" forIndexPath:indexPath];
     MovieModel *model = [movieArray objectAtIndex:indexPath.row];
+    cell.backgroundColor = [UIColor orangeColor];
     [cell.movieTitle setText:model.title];
     cell.movieImage.contentMode = UIViewContentModeScaleAspectFit;
     [cell.movieImage setImageWithURL:model.posterURL];
@@ -281,4 +288,10 @@
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
 }
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
+}
+
+
 @end

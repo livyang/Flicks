@@ -36,7 +36,22 @@
     //set Label
     self.movieOverview.backgroundColor = [UIColor blackColor];
     self.movieOverview.textColor = [UIColor whiteColor];
-    self.movieOverview.text = self.model.moviewDescription;
+
+    UIFont *font1 = [UIFont boldSystemFontOfSize:18.0];
+    NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+    NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \n\n",self.model.title] attributes: arialDict];
+    
+    UIFont *font2 = [UIFont systemFontOfSize:14.0];
+    NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject: font2 forKey:NSFontAttributeName];
+    NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \n",self.model.moviewDescription] attributes: arialDict2];
+    
+    
+    [aAttrString1 appendAttributedString:aAttrString2];
+
+    
+    self.movieOverview.attributedText = aAttrString1;
+    
+//    self.movieOverview.text = desc;
     [self.movieOverview sizeToFit];
     
 }
