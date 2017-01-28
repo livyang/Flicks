@@ -44,9 +44,11 @@
     
     NSLog(@"restorationIdentifier is %@", self.restorationIdentifier);
     if ([self.restorationIdentifier isEqualToString:@"Movies"]) {
+        self.navigationItem.title = @"Now Playing";
         [self fetchMovies:@"now_playing"];
         
     }else if ([self.restorationIdentifier isEqualToString:@"TopMovies"]) {
+        self.navigationItem.title = @"Top Rated";
         [self fetchMovies:@"top_rated"];
     }else {
         NSLog((@"Unknown restorationIdentifier"));
@@ -102,7 +104,6 @@
     NSString *urlString =[NSString stringWithFormat:@"https://api.themoviedb.org/3/movie/%@?api_key=%@", query, apiKey];
     NSLog(@"url string is %@", urlString);
 
-    
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
@@ -266,8 +267,9 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSMutableArray *filteredMovies = [NSMutableArray array];
+    NSMutableArray *filteredMovies;
     if (searchText.length != 0) {
+        filteredMovies = [NSMutableArray array];
         self.filteredMovies = nil;
    
         NSLog(@"search text is %@", searchText);
@@ -279,6 +281,8 @@
             }
         }
         self.filteredMovies = filteredMovies;
+    }else {
+        self.filteredMovies = nil;
     }
     [self.movieTableView reloadData];
     [self.movieCollectionView reloadData];
